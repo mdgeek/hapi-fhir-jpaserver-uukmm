@@ -100,7 +100,7 @@ hapi:
 #    reuse_cached_search_results_millis: 60000
     tester:
         home:
-          name: UUKMM
+          name: UUKMM (@fhir-version-uc@)
           server_address: @fhir-endpoint@
           refuse_to_fetch_third_party_urls: false
           fhir_version: @fhir-version-uc@

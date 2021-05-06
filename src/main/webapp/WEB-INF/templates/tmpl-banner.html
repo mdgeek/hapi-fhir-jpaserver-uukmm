@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <div th:fragment="banner">
-	<div class="row">
+	<div class="row align-items-center">
 		<div class="col-md-8">
 			<img src="img/logo.png" width="383" alt="University of Utah" />
 		</div>
@@ -9,7 +9,7 @@
 			<img src="img/hapi_fhir_banner_right.png" align="right" />
 		</div>
 	</div>
-	
+	<hr>
 	<!-- Error banner in case anything went wrong -->	
 	<div class="alert  alert-danger alert-dismissable" th:if="${errorMsg} != null">
 		<strong>Warning!</strong>
