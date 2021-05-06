@@ -60,26 +60,45 @@ public class AppProperties {
   private Map<String, Tester> tester = null;
   private Logger logger = new Logger();
   private Subscription subscription = new Subscription();
-  private Cors cors = null;
-  private Partitioning partitioning = null;
-  private Map<String, ImplementationGuide> implementationGuides = null;
 
-  private Boolean lastn_enabled = false;
-  private NormalizedQuantitySearchLevel normalized_quantity_search_level = NormalizedQuantitySearchLevel.NORMALIZED_QUANTITY_SEARCH_NOT_SUPPORTED;
+	private Cors cors = null;
 
-  private Boolean use_apache_address_strategy = false;
-  private Boolean use_apache_address_strategy_https = false;
+	private Partitioning partitioning = null;
 
-  public Boolean getUse_apache_address_strategy() {
-    return use_apache_address_strategy;
-  }
+	private Map<String, ImplementationGuide> implementationGuides = null;
 
-  public void setUse_apache_address_strategy(Boolean use_apache_address_strategy) {
-    this.use_apache_address_strategy = use_apache_address_strategy;
-  }
+	private Boolean lastn_enabled = false;
 
-    public Boolean getUse_apache_address_strategy_https() {
-    return use_apache_address_strategy_https;
+	private NormalizedQuantitySearchLevel normalized_quantity_search_level = NormalizedQuantitySearchLevel.NORMALIZED_QUANTITY_SEARCH_NOT_SUPPORTED;
+
+	private Boolean use_apache_address_strategy = false;
+
+	private Boolean use_apache_address_strategy_https = false;
+
+	// ------------------ Begin UUKMM ------------------
+
+	private String oauth_base = null;
+
+	public String getOauth_base() {
+		return oauth_base;
+	}
+
+	public void setOauth_base(String oauth_base) {
+		this.oauth_base = oauth_base;
+	}
+
+	// ------------------ End UUKMM ------------------
+
+	public Boolean getUse_apache_address_strategy() {
+		return use_apache_address_strategy;
+	}
+
+	public void setUse_apache_address_strategy(Boolean use_apache_address_strategy) {
+		this.use_apache_address_strategy = use_apache_address_strategy;
+	}
+
+	public Boolean getUse_apache_address_strategy_https() {
+		return use_apache_address_strategy_https;
   }
 
   public void setUse_apache_address_strategy_https(Boolean use_apache_address_strategy_https) {

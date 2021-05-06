@@ -39,6 +39,8 @@ hapi:
 #   use_apache_address_strategy_https: false
 ### enable to set the Server URL
     server_address: http://localhost:8090/fhir/baseR4
+    oauth_base: http://localhost:8090/fhir/auth
+
 #    defer_indexing_for_codesystems_of_size: 101
 #    implementationguides:
 ###    example from registry (packages.fhir.org)

@@ -12,24 +12,19 @@ import ca.uhn.fhir.jpa.binstore.BinaryStorageInterceptor;
 import ca.uhn.fhir.jpa.bulk.provider.BulkDataExportProvider;
 import ca.uhn.fhir.jpa.interceptor.CascadingDeleteInterceptor;
 import ca.uhn.fhir.jpa.packages.IPackageInstallerSvc;
-import ca.uhn.fhir.jpa.packages.PackageInstallOutcomeJson;
 import ca.uhn.fhir.jpa.packages.PackageInstallationSpec;
 import ca.uhn.fhir.jpa.partition.PartitionManagementProvider;
-import ca.uhn.fhir.jpa.provider.*;
-import ca.uhn.fhir.jpa.provider.dstu3.JpaConformanceProviderDstu3;
-import ca.uhn.fhir.jpa.provider.r4.JpaConformanceProviderR4;
-import ca.uhn.fhir.jpa.provider.r5.JpaConformanceProviderR5;
+import ca.uhn.fhir.jpa.provider.GraphQLProvider;
+import ca.uhn.fhir.jpa.provider.IJpaSystemProvider;
+import ca.uhn.fhir.jpa.provider.SubscriptionTriggeringProvider;
+import ca.uhn.fhir.jpa.provider.TerminologyUploaderProvider;
 import ca.uhn.fhir.jpa.search.DatabaseBackedPagingProvider;
 import ca.uhn.fhir.jpa.searchparam.registry.ISearchParamRegistry;
 import ca.uhn.fhir.jpa.subscription.util.SubscriptionDebugLogInterceptor;
 import ca.uhn.fhir.narrative.DefaultThymeleafNarrativeGenerator;
 import ca.uhn.fhir.narrative.INarrativeGenerator;
 import ca.uhn.fhir.narrative2.NullNarrativeGenerator;
-import ca.uhn.fhir.rest.server.ETagSupportEnum;
-import ca.uhn.fhir.rest.server.HardcodedServerAddressStrategy;
-import ca.uhn.fhir.rest.server.ApacheProxyAddressStrategy;
-import ca.uhn.fhir.rest.server.IncomingRequestAddressStrategy;
-import ca.uhn.fhir.rest.server.RestfulServer;
+import ca.uhn.fhir.rest.server.*;
 import ca.uhn.fhir.rest.server.interceptor.*;
 import ca.uhn.fhir.rest.server.interceptor.partition.RequestTenantPartitionInterceptor;
 import ca.uhn.fhir.rest.server.provider.ResourceProviderFactory;
@@ -37,6 +32,10 @@ import ca.uhn.fhir.rest.server.tenant.UrlBaseTenantIdentificationStrategy;
 import ca.uhn.fhir.validation.IValidatorModule;
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import com.google.common.base.Strings;
+import edu.utah.kmm.fhir.server.jpa.dstu2.ConformanceProviderDstu2;
+import edu.utah.kmm.fhir.server.jpa.dstu3.ConformanceProviderDstu3;
+import edu.utah.kmm.fhir.server.jpa.r4.ConformanceProviderR4;
+import edu.utah.kmm.fhir.server.jpa.r5.ConformanceProviderR5;
 import org.hl7.fhir.r4.model.Bundle.BundleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -145,30 +144,30 @@ public class BaseJpaRestfulServer extends RestfulServer {
     FhirVersionEnum fhirVersion = fhirSystemDao.getContext().getVersion().getVersion();
     if (fhirVersion == FhirVersionEnum.DSTU2) {
 
-      JpaConformanceProviderDstu2 confProvider = new JpaConformanceProviderDstu2(this, fhirSystemDao,
-        daoConfig);
+		 ConformanceProviderDstu2 confProvider = new ConformanceProviderDstu2(appProperties.getOauth_base(), this, fhirSystemDao,
+			 daoConfig);
       confProvider.setImplementationDescription("HAPI FHIR DSTU2 Server");
       setServerConformanceProvider(confProvider);
     } else {
       if (fhirVersion == FhirVersionEnum.DSTU3) {
 
-        JpaConformanceProviderDstu3 confProvider = new JpaConformanceProviderDstu3(this, fhirSystemDao,
-          daoConfig, searchParamRegistry);
+			ConformanceProviderDstu3 confProvider = new ConformanceProviderDstu3(appProperties.getOauth_base(), this, fhirSystemDao,
+				daoConfig, searchParamRegistry);
         confProvider.setImplementationDescription("HAPI FHIR DSTU3 Server");
         setServerConformanceProvider(confProvider);
       } else if (fhirVersion == FhirVersionEnum.R4) {
 
-        JpaConformanceProviderR4 confProvider = new JpaConformanceProviderR4(this, fhirSystemDao,
-          daoConfig, searchParamRegistry);
-        confProvider.setImplementationDescription("HAPI FHIR R4 Server");
-        setServerConformanceProvider(confProvider);
-      } else if (fhirVersion == FhirVersionEnum.R5) {
+			ConformanceProviderR4 confProvider = new ConformanceProviderR4(appProperties.getOauth_base(), this, fhirSystemDao,
+				daoConfig, searchParamRegistry);
+			confProvider.setImplementationDescription("HAPI FHIR R4 Server");
+			setServerConformanceProvider(confProvider);
+		} else if (fhirVersion == FhirVersionEnum.R5) {
 
-        JpaConformanceProviderR5 confProvider = new JpaConformanceProviderR5(this, fhirSystemDao,
-          daoConfig, searchParamRegistry);
-        confProvider.setImplementationDescription("HAPI FHIR R5 Server");
-        setServerConformanceProvider(confProvider);
-      } else {
+			ConformanceProviderR5 confProvider = new ConformanceProviderR5(appProperties.getOauth_base(), this, fhirSystemDao,
+				daoConfig, searchParamRegistry);
+			confProvider.setImplementationDescription("HAPI FHIR R5 Server");
+			setServerConformanceProvider(confProvider);
+		} else {
         throw new IllegalStateException();
       }
     }
