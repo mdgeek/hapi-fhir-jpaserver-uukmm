@@ -20,21 +20,27 @@ import static edu.utah.kmm.fhir.server.jpa.ServerUtil.SMART_EXTENSION_URL;
 
 public class ConformanceProviderDstu2 extends JpaConformanceProviderDstu2 {
 
-    private final String oAuthBase;
+	private final String oAuthBase;
 
-    private final boolean hasServerBase;
+	private final boolean hasServerBase;
 
-    public ConformanceProviderDstu2(String oAuthBase, RestfulServer theRestfulServer, IFhirSystemDao<Bundle, MetaDt> theSystemDao, DaoConfig theDaoConfig) {
-        super(theRestfulServer, theSystemDao, theDaoConfig);
-        this.oAuthBase = oAuthBase;
-        hasServerBase = oAuthBase != null && oAuthBase.contains(SERVER_BASE_PLACEHOLDER);
-    }
+	public ConformanceProviderDstu2(
+		RestfulServer theRestfulServer,
+		IFhirSystemDao<Bundle, MetaDt> theSystemDao,
+		DaoConfig theDaoConfig,
+		String oAuthBase) {
+		super(theRestfulServer, theSystemDao, theDaoConfig);
+		this.oAuthBase = oAuthBase;
+		hasServerBase = oAuthBase != null && oAuthBase.contains(SERVER_BASE_PLACEHOLDER);
+	}
 
-    public Conformance getServerConformance(HttpServletRequest theRequest, RequestDetails theRequestDetails) {
-        Conformance cs = super.getServerConformance(theRequest, theRequestDetails);
+	public Conformance getServerConformance(
+		HttpServletRequest theRequest,
+		RequestDetails theRequestDetails) {
+		Conformance cs = super.getServerConformance(theRequest, theRequestDetails);
 
-        if (oAuthBase != null) {
-            String base = hasServerBase ? ServerUtil.resolveServerBase(oAuthBase, theRequest) : oAuthBase;
+		if (oAuthBase != null) {
+			String base = hasServerBase ? ServerUtil.resolveServerBase(oAuthBase, theRequest) : oAuthBase;
             ExtensionDt extSMART = new ExtensionDt().setUrl(SMART_EXTENSION_URL);
             cs.getRestFirstRep().getSecurity().addUndeclaredExtension(extSMART);
             ExtensionDt extAuth = new ExtensionDt().setUrl("authorize").setValue(new UriDt(base + "authorize"));

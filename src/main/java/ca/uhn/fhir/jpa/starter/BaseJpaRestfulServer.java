@@ -144,32 +144,32 @@ public class BaseJpaRestfulServer extends RestfulServer {
     FhirVersionEnum fhirVersion = fhirSystemDao.getContext().getVersion().getVersion();
     if (fhirVersion == FhirVersionEnum.DSTU2) {
 
-		 ConformanceProviderDstu2 confProvider = new ConformanceProviderDstu2(appProperties.getOauth_base(), this, fhirSystemDao,
-			 daoConfig);
-      confProvider.setImplementationDescription("HAPI FHIR DSTU2 Server");
-      setServerConformanceProvider(confProvider);
-    } else {
-      if (fhirVersion == FhirVersionEnum.DSTU3) {
+		 ConformanceProviderDstu2 confProvider = new ConformanceProviderDstu2(this, fhirSystemDao, daoConfig,
+			 appProperties.getOauth_base());
+		 confProvider.setImplementationDescription("HAPI FHIR DSTU2 Server");
+		 setServerConformanceProvider(confProvider);
+	 } else {
+		 if (fhirVersion == FhirVersionEnum.DSTU3) {
 
-			ConformanceProviderDstu3 confProvider = new ConformanceProviderDstu3(appProperties.getOauth_base(), this, fhirSystemDao,
-				daoConfig, searchParamRegistry);
-        confProvider.setImplementationDescription("HAPI FHIR DSTU3 Server");
-        setServerConformanceProvider(confProvider);
-      } else if (fhirVersion == FhirVersionEnum.R4) {
+			 ConformanceProviderDstu3 confProvider = new ConformanceProviderDstu3(this, fhirSystemDao, daoConfig,
+				 searchParamRegistry, appProperties.getOauth_base());
+			 confProvider.setImplementationDescription("HAPI FHIR DSTU3 Server");
+			 setServerConformanceProvider(confProvider);
+		 } else if (fhirVersion == FhirVersionEnum.R4) {
 
-			ConformanceProviderR4 confProvider = new ConformanceProviderR4(appProperties.getOauth_base(), this, fhirSystemDao,
-				daoConfig, searchParamRegistry);
-			confProvider.setImplementationDescription("HAPI FHIR R4 Server");
-			setServerConformanceProvider(confProvider);
-		} else if (fhirVersion == FhirVersionEnum.R5) {
+			 ConformanceProviderR4 confProvider = new ConformanceProviderR4(this, fhirSystemDao, daoConfig,
+				 searchParamRegistry, appProperties.getOauth_base());
+			 confProvider.setImplementationDescription("HAPI FHIR R4 Server");
+			 setServerConformanceProvider(confProvider);
+		 } else if (fhirVersion == FhirVersionEnum.R5) {
 
-			ConformanceProviderR5 confProvider = new ConformanceProviderR5(appProperties.getOauth_base(), this, fhirSystemDao,
-				daoConfig, searchParamRegistry);
-			confProvider.setImplementationDescription("HAPI FHIR R5 Server");
-			setServerConformanceProvider(confProvider);
-		} else {
-        throw new IllegalStateException();
-      }
+			 ConformanceProviderR5 confProvider = new ConformanceProviderR5(this, fhirSystemDao, daoConfig,
+				 searchParamRegistry, appProperties.getOauth_base());
+			 confProvider.setImplementationDescription("HAPI FHIR R5 Server");
+			 setServerConformanceProvider(confProvider);
+		 } else {
+			 throw new IllegalStateException();
+		 }
     }
 
     /*

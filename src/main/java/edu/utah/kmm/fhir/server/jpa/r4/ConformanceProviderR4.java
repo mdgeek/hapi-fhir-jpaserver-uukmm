@@ -21,11 +21,11 @@ public class ConformanceProviderR4 extends JpaConformanceProviderR4 {
 	private final boolean hasServerBase;
 
 	public ConformanceProviderR4(
-		String oAuthBase,
 		RestfulServer theRestfulServer,
 		IFhirSystemDao<Bundle, Meta> theSystemDao,
 		DaoConfig theDaoConfig,
-		ISearchParamRegistry theSearchParamRegistry) {
+		ISearchParamRegistry theSearchParamRegistry,
+		String oAuthBase) {
 		super(theRestfulServer, theSystemDao, theDaoConfig, theSearchParamRegistry);
 		this.oAuthBase = oAuthBase;
 		hasServerBase = oAuthBase != null && oAuthBase.contains(SERVER_BASE_PLACEHOLDER);
