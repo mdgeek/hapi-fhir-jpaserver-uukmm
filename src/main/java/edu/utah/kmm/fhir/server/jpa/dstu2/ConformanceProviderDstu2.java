@@ -43,8 +43,8 @@ public class ConformanceProviderDstu2 extends JpaConformanceProviderDstu2 {
 			String base = hasServerBase ? ServerUtil.resolveServerBase(oAuthBase, theRequest) : oAuthBase;
             ExtensionDt extSMART = new ExtensionDt().setUrl(SMART_EXTENSION_URL);
             cs.getRestFirstRep().getSecurity().addUndeclaredExtension(extSMART);
-            ExtensionDt extAuth = new ExtensionDt().setUrl("authorize").setValue(new UriDt(base + "authorize"));
-            ExtensionDt extToken = new ExtensionDt().setUrl("token").setValue(new UriDt(base + "token"));
+            ExtensionDt extAuth = new ExtensionDt().setUrl("authorize").setValue(new UriDt(base + "/authorize"));
+            ExtensionDt extToken = new ExtensionDt().setUrl("token").setValue(new UriDt(base + "/token"));
             extSMART.addUndeclaredExtension(extAuth);
             extSMART.addUndeclaredExtension(extToken);
         }

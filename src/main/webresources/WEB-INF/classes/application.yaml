@@ -30,7 +30,7 @@ spring:
 hapi:
   fhir:
     ### This is the FHIR version. Choose between, DSTU2, DSTU3, R4 or R5
-    fhir_version: R4
+    fhir_version: @fhir-version-uc@
 ### enable to use the ApacheProxyAddressStrategy which uses X-Forwarded-* headers
 ### to determine the FHIR server address
 #   use_apache_address_strategy: false
@@ -38,9 +38,8 @@ hapi:
 ### alternatively, it may be set using the X-Forwarded-Proto header.
 #   use_apache_address_strategy_https: false
 ### enable to set the Server URL
-    server_address: http://localhost:8090/fhir/baseR4
-    oauth_base: http://localhost:8090/fhir/auth
-
+    server_address: @fhir-endpoint@
+    oauth_base: @oauth-base@
 #    defer_indexing_for_codesystems_of_size: 101
 #    implementationguides:
 ###    example from registry (packages.fhir.org)
@@ -101,15 +100,15 @@ hapi:
 #    reuse_cached_search_results_millis: 60000
     tester:
         home:
-          name: Local Tester
-          server_address: 'http://localhost:8090/fhir'
+          name: UUKMM
+          server_address: @fhir-endpoint@
           refuse_to_fetch_third_party_urls: false
-          fhir_version: R4
+          fhir_version: @fhir-version-uc@
         global:
           name: Global Tester
-          server_address: "http://hapi.fhir.org/baseR4"
+          server_address: "http://hapi.fhir.org/base@fhir-version-cc@"
           refuse_to_fetch_third_party_urls: false
-          fhir_version: R4
+          fhir_version: @fhir-version-uc@
 #    validation:
 #      requests_enabled: true
 #      responses_enabled: true
@@ -129,7 +128,7 @@ hapi:
 #        startTlsRequired:
 #        quitWait:
 #    lastn_enabled: true
-###  This is configuration for normalized quantity serach level default is 0
+###  This is configuration for normalized quantity search level default is 0
 ###   0: NORMALIZED_QUANTITY_SEARCH_NOT_SUPPORTED - default
 ###   1: NORMALIZED_QUANTITY_STORAGE_SUPPORTED
 ###   2: NORMALIZED_QUANTITY_SEARCH_SUPPORTED

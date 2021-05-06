@@ -39,8 +39,8 @@ public class ConformanceProviderR5 extends JpaConformanceProviderR5 {
 		if (oAuthBase != null) {
 			String base = hasServerBase ? ServerUtil.resolveServerBase(oAuthBase, theRequest) : oAuthBase;
 			Extension ext = cs.getRestFirstRep().getSecurity().addExtension().setUrl(SMART_EXTENSION_URL);
-			ext.addExtension().setUrl("authorize").setValue(new UriType(base + "authorize"));
-			ext.addExtension().setUrl("token").setValue(new UriType(base + "token"));
+			ext.addExtension().setUrl("authorize").setValue(new UriType(base + "/authorize"));
+			ext.addExtension().setUrl("token").setValue(new UriType(base + "/token"));
 		}
 
 		return cs;
