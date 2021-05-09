@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: 'jdbc:h2:file:./target/database/h2'
+    url: 'jdbc:h2:file:./target/@fhir-version-lc@/database/h2'
     #url: jdbc:h2:mem:test_mem
     username: sa
     password: null
