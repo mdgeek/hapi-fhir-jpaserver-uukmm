@@ -21,14 +21,14 @@ public class FhirServerConfigDstu3 extends BaseJavaConfigDstu3 {
   @Autowired
   private DataSource myDataSource;
 
-  /**
-   * We override the paging provider definition so that we can customize
-   * the default/max page sizes for search results. You can set these however
-   * you want, although very large page sizes will require a lot of RAM.
-   */
   @Autowired
   AppProperties appProperties;
 
+	/**
+	 * We override the paging provider definition so that we can customize
+	 * the default/max page sizes for search results. You can set these however
+	 * you want, although very large page sizes will require a lot of RAM.
+	 */
   @Override
   public DatabaseBackedPagingProvider databaseBackedPagingProvider() {
     DatabaseBackedPagingProvider pagingProvider = super.databaseBackedPagingProvider();
